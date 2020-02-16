@@ -86,6 +86,9 @@ function subscribe(){
 }
 
 function unChecked(){
+	atbash.disabled = false;
+	caesar.disabled = false;
+	vigener.disabled = false;
 	atbash.checked = false;
 	caesar.checked = false;
 	vigener.checked = false;
