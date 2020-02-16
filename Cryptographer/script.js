@@ -65,10 +65,9 @@ function extend( obj, extension ){
 }
 
 let encrypt_btn = document.querySelector(".encryption__button");
-let decrypt_btn = document.querySelector(".decryption__button");
+let encryption = "encrypt";
 
 extend( encrypt_btn, new Subject() );
-extend( decrypt_btn, new Subject() );
 
 let atbash = document.querySelector(".atbash__check");
 let caesar = document.querySelector(".caesar__check");
@@ -81,10 +80,8 @@ extend( vigener, new Observer() );
 function subscribe(){
 	if (this.checked){
 		encrypt_btn.addObserver( this );
-		decrypt_btn.addObserver( this );
 	}else{
 		encrypt_btn.removeObserver( this );
-		decrypt_btn.removeObserver( this );
 	}
 }
 
@@ -94,16 +91,20 @@ function unChecked(){
 	vigener.checked = false;
 }
 
+function changeEncryption( radio ){
+	if ( radio.value == "encrypt" ){
+		encryption = "encrypt";
+	}else{
+		encryption = "decrypt";
+	}
+}
+
 function changeMode( radio ){
-	if ( radio.value == "observer"){
+	if ( radio.value == "observer" ){
 		unChecked();
 
 		encrypt_btn.onclick = () => {
-			encrypt_btn.notify("encrypt");
-		};
-
-		decrypt_btn.onclick = () => {
-			decrypt_btn.notify("decrypt");
+			encrypt_btn.notify(encryption);
 		};
 
 		atbash.onchange = subscribe;
@@ -114,26 +115,14 @@ function changeMode( radio ){
 	}
 }
 
-let queueArr = [];
-
-function addToQueue( cifer ){
-	if (cifer.checked){
-		queueArr.push cifer.cifer;
-	}else{
-		queueArr.
-	}
-}
-
-
 let input_txt = document.querySelector(".input__text");
 let encrypt_txt = document.querySelector(".encryption__text");
-let decrypt_txt = document.querySelector(".decryption__text");
 
 atbash.update = ( action ) => {
 	if ( action === "encrypt" ){
 		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + ciferAtbash( input_txt, action ) + "\n";
 	}else if ( action === "decrypt" ){
-		decrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + ciferAtbash( input_txt, action ) + "\n";
+		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + ciferAtbash( input_txt, action ) + "\n";
 	}
 };
 
@@ -141,7 +130,7 @@ caesar.update = ( action ) => {
 	if ( action === "encrypt" ){
 		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + ciferCaesar( input_txt, action ) + "\n";
 	}else if ( action === "decrypt" ){
-		decrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + ciferCaesar( input_txt, action ) + "\n";
+		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + ciferCaesar( input_txt, action ) + "\n";
 	}
 };
 
@@ -149,7 +138,7 @@ vigener.update = ( action ) => {
 	if ( action === "encrypt" ){
 		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + ciferVigener( input_txt, action ) + "\n";
 	}else if ( action === "decrypt" ){
-		decrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + ciferVigener( input_txt, action ) + "\n";
+		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + ciferVigener( input_txt, action ) + "\n";
 	}
 };
 

@@ -11,6 +11,10 @@
 			<textarea placeholder="Введите текст, который хотите зашифровать/расшифровать" class="input__text"></textarea>
 		</div>
 		<div class="selector">
+			<div class="selector__switch">
+					<input type="radio" name="mode" value="observer" id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
+					<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
+			</div>
 			<div class="selector__checkboxes">
 				<div class="atbash">
 					<input type="checkbox" class="atbash__check" id="atbash"><label for="atbash">Шифр Атбаш</label>
@@ -25,22 +29,16 @@
 					<br>
 					<input type="text" class="vigener__keyword">
 				</div>
-				<div class="selector__switch">
-					<input type="radio" name="mode" value="observer" checked id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
-					<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
-				</div>
 			</div>
 		</div>
 		<div class="output">
 			<div class="encryption">
-				<button class="encryption__button">Зашифровать</button>
+				<input type="radio" name="encryption" value="encrypt" id="encrypt" onclick="changeEncryption(this)"><label for="encrypt">Зашифровать</label>
+				<input type="radio" name="encryption" value="decrypt" id="decrypt" onclick="changeEncryption(this)"><label for="decrypt">Расшифровать</label>
 				<br>
-				<textarea placeholder="Здесь появится зашифрованный текст" readonly class="encryption__text"></textarea>
-			</div>
-			<div class="decryption">
-				<button class="decryption__button">Расшифровать</button>
+				<button class="encryption__button">Обработать</button>
 				<br>
-				<textarea placeholder="Здесь появится расшифрованный текст" readonly class="decryption__text"></textarea>
+				<textarea placeholder="Здесь появится обработанный текст" readonly class="encryption__text"></textarea>
 			</div>
 		</div>
 	</div>
