@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Cryptographer</title>
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="input">
+			<textarea placeholder="Введите текст, который хотите зашифровать/расшифровать" class="input__text"></textarea>
+		</div>
+		<div class="selector">
+			<div class="selector__checkboxes">
+				<div class="atbash">
+					<input type="checkbox" class="atbash__check" id="atbash"><label for="atbash">Шифр Атбаш</label>
+				</div>
+				<div class="caesar">
+					<input type="checkbox" class="caesar__check" id="caesar"><label for="caesar">Шифр Цезаря</label>
+					<br>
+					<input type="number" class="caesar__offset" min="1" max="33" value="1">
+				</div>
+				<div class="vigener">
+					<input type="checkbox" class="vigener__check" id="vigener"><label for="vigener">Шифр Виженера</label>
+					<br>
+					<input type="text" class="vigener__keyword">
+				</div>
+				<div class="selector__switch">
+					<input type="radio" name="mode" value="observer" checked id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
+					<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
+				</div>
+			</div>
+		</div>
+		<div class="output">
+			<div class="encryption">
+				<button class="encryption__button">Зашифровать</button>
+				<br>
+				<textarea placeholder="Здесь появится зашифрованный текст" readonly class="encryption__text"></textarea>
+			</div>
+			<div class="decryption">
+				<button class="decryption__button">Расшифровать</button>
+				<br>
+				<textarea placeholder="Здесь появится расшифрованный текст" readonly class="decryption__text"></textarea>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="script.js"></script>
+</html>
