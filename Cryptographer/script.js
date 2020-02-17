@@ -121,27 +121,31 @@ function changeMode( radio ){
 let input_txt = document.querySelector(".input__text");
 let encrypt_txt = document.querySelector(".encryption__text");
 
+atbash.ciferFunc = ciferAtbash;
+caesar.ciferFunc = ciferCaesar;
+vigener.ciferFunc = ciferVigener;
+
 atbash.update = ( action ) => {
 	if ( action === "encrypt" ){
-		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + ciferAtbash( input_txt, action ) + "\n";
+		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt, action ) + "\n";
 	}else if ( action === "decrypt" ){
-		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + ciferAtbash( input_txt, action ) + "\n";
+		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt, action ) + "\n";
 	}
 };
 
 caesar.update = ( action ) => {
 	if ( action === "encrypt" ){
-		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + ciferCaesar( input_txt, action ) + "\n";
+		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt, action ) + "\n";
 	}else if ( action === "decrypt" ){
-		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + ciferCaesar( input_txt, action ) + "\n";
+		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt, action ) + "\n";
 	}
 };
 
 vigener.update = ( action ) => {
 	if ( action === "encrypt" ){
-		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + ciferVigener( input_txt, action ) + "\n";
+		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt, action ) + "\n";
 	}else if ( action === "decrypt" ){
-		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + ciferVigener( input_txt, action ) + "\n";
+		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt, action ) + "\n";
 	}
 };
 
@@ -150,39 +154,28 @@ function ciferAtbash( txt, action ){
 	let tebahpla_ur = "ЯЮЭЬЫЪЩШЧЦХФУТСРПОНМЛКЙИЗЖЁЕДГВБА";
 	let alphabet_ru1 = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 	let tebahpla_ur1 = "яюэьыъщшчцхфутсрпонмлкйизжёедгвба";
+	let alphabet_eng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	let tebahpla_gne = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+	let alphabet_eng1 = "abcdefghijklmnopqrstuvwxyz";
+	let tebahpla_gne1 = "zyxwvutsrqponmlkjihgfedcba";
 	let string = "";
 
-	if ( action === "encrypt" ){
-		for ( let char of txt.value.trim() ){
+	for ( let char of txt.value.trim() ){
+		if ( alphabet_ru.indexOf(char) != -1 || alphabet_ru1.indexOf(char) != -1 ) {
 			if ( char == char.toUpperCase() ){
-				if ( alphabet_ru.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
 				string += tebahpla_ur[alphabet_ru.indexOf(char)];
 			}else{
-				if ( alphabet_ru1.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
 				string += tebahpla_ur1[alphabet_ru1.indexOf(char)];
 			}
-		}
-	}else if ( action === "decrypt" ){
-		for ( let char of txt.value.trim() ){
+		}else if ( alphabet_eng.indexOf(char) != -1 || alphabet_eng1.indexOf(char) != -1 ){
 			if ( char == char.toUpperCase() ){
-				if ( alphabet_ru.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
-				string += alphabet_ru[tebahpla_ur.indexOf(char)];
+				string += tebahpla_gne[alphabet_eng.indexOf(char)];
 			}else{
-				if ( alphabet_ru1.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
-				string += alphabet_ru1[tebahpla_ur1.indexOf(char)];
+				string += tebahpla_gne1[alphabet_eng1.indexOf(char)];
 			}
+		}else{
+			string += char;
+			continue;
 		}
 	}
 
@@ -192,53 +185,47 @@ function ciferAtbash( txt, action ){
 function ciferCaesar( txt, action ){
 	let alphabet_ru = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 	let alphabet_ru1 = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+	let alphabet_eng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	let alphabet_eng1 = "abcdefghijklmnopqrstuvwxyz";
+
 	let offset = document.querySelector(".caesar__offset");
 	let string = "";
 
-	if ( action === "encrypt" ){
-		for ( let char of txt.value.trim() ){
+	for ( let char of txt.value.trim() ){
+		if ( alphabet_ru.indexOf(char) != -1 || alphabet_ru1.indexOf(char) != -1 ) {
 			if ( char == char.toUpperCase() ){
-				if ( alphabet_ru.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
-				string += alphabet_ru[
-				(alphabet_ru.indexOf(char) + +offset.value) >= alphabet_ru.length ? 
-				alphabet_ru.indexOf(char) + +offset.value - alphabet_ru.length : 
-				alphabet_ru.indexOf(char) + +offset.value];
+				string += ciferCaesarString( alphabet_ru, char, offset, action );
 			}else{
-				if ( alphabet_ru1.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
-				string += alphabet_ru1[
-				(alphabet_ru1.indexOf(char) + +offset.value) >= alphabet_ru1.length ? 
-				alphabet_ru1.indexOf(char) + +offset.value - alphabet_ru1.length : 
-				alphabet_ru1.indexOf(char) + +offset.value];
+				string += ciferCaesarString( alphabet_ru1, char, offset, action );
 			}
-		}
-	}else if ( action === "decrypt" ){
-		for ( let char of txt.value.trim() ){
+		}else if ( alphabet_eng.indexOf(char) != -1 || alphabet_eng1.indexOf(char) != -1 ){
 			if ( char == char.toUpperCase() ){
-				if ( alphabet_ru.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
-				string += alphabet_ru[
-				(alphabet_ru.indexOf(char) - +offset.value) < 0 ? 
-				alphabet_ru.indexOf(char) - +offset.value + alphabet_ru.length : 
-				alphabet_ru.indexOf(char) - +offset.value];
+				string += ciferCaesarString( alphabet_eng, char, offset, action );
 			}else{
-				if ( alphabet_ru1.indexOf(char) == -1){
-					string += char;
-					continue;
-				}
-				string += alphabet_ru1[
-				(alphabet_ru1.indexOf(char) - +offset.value) < 0 ? 
-				alphabet_ru1.indexOf(char) - +offset.value + alphabet_ru1.length : 
-				alphabet_ru1.indexOf(char) - +offset.value];
+				string += ciferCaesarString( alphabet_eng1, char, offset, action );
 			}
+		}else{
+			string += char;
+			continue;
 		}
+	}
+
+	return string;
+}
+
+function ciferCaesarString( alphabet, char, offset, action ){
+	let string = "";
+
+	if ( action == "encrypt" ){
+		string += alphabet[
+		(alphabet.indexOf(char) + +offset.value) >= alphabet.length ? 
+		alphabet.indexOf(char) + +offset.value - alphabet.length : 
+		alphabet.indexOf(char) + +offset.value];
+	}else if ( action == "decrypt" ){
+		string += alphabet[
+		(alphabet.indexOf(char) - +offset.value) < 0 ? 
+		alphabet.indexOf(char) - +offset.value + alphabet.length : 
+		alphabet.indexOf(char) - +offset.value];
 	}
 
 	return string;
@@ -247,6 +234,8 @@ function ciferCaesar( txt, action ){
 function ciferVigener( txt, action ){
 	let alphabet_ru = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 	let alphabet_ru1 = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+	let alphabet_eng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	let alphabet_eng1 = "abcdefghijklmnopqrstuvwxyz";
 	let txt_wsp = txt.value.split(" ").join("");
 	let keyword = document.querySelector(".vigener__keyword");
 	let key_txt = keyword.value.toUpperCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);

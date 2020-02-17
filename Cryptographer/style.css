@@ -2,12 +2,13 @@
 .input {}
 .input__text {}
 .selector {}
+.selector__switch {}
 .selector__checkboxes {}
 .atbash {}
 .atbash__check {}
 .caesar {}
 .caesar__check {}
-.cesar__offset {}
+.caesar__offset {}
 .vigener {}
 .vigener__check {}
 .vigener__keyword {}
@@ -15,6 +16,3 @@
 .encryption {}
 .encryption__button {}
 .encryption__text {}
-.decryption {}
-.decryption__button {}
-.decryption__text {}
