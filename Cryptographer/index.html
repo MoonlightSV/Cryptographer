@@ -11,9 +11,16 @@
 			<textarea placeholder="Введите текст, который хотите зашифровать/расшифровать" class="input__text"></textarea>
 		</div>
 		<div class="selector">
+			<div class="selector__alphabet">
+				<label for="alphabet">Алфавит</label>
+				<select name="alphabet" id="alphabet">
+					<option value="ru">Русский</option>
+					<option value="eng">Английский</option>
+				</select>
+			</div>
 			<div class="selector__switch">
-					<input type="radio" name="mode" value="observer" id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
-					<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
+				<input type="radio" name="mode" value="observer" id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
+				<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
 			</div>
 			<div class="selector__checkboxes">
 				<div class="atbash">
