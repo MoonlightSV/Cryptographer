@@ -68,11 +68,67 @@ function extend( obj, extension ){
   }
 }
 
+function Conveyer(){
+	this.conveyerList = [];
+}
+
+Conveyer.prototype.add = function( obj ){
+  return this.conveyerList.push( obj );
+};
+ 
+Conveyer.prototype.count = function(){
+  return this.conveyerList.length;
+};
+ 
+Conveyer.prototype.get = function( index ){
+  if( index > -1 && index < this.conveyerList.length ){
+    return this.conveyerList[ index ];
+  }
+};
+ 
+Conveyer.prototype.indexOf = function( obj, startIndex ){
+  var i = startIndex;
+ 
+  while( i < this.conveyerList.length ){
+    if( this.conveyerList[i] === obj ){
+      return i;
+    }
+    i++;
+  }
+ 
+  return -1;
+};
+ 
+Conveyer.prototype.removeAt = function( index ){
+  this.conveyerList.splice( index, 1 );
+};
+
+Conveyer.prototype.removeAll = function(){
+	this.conveyerList.length = 0;
+};
+
+let conveyer = new Conveyer();
+
 let encrypt_btn = document.querySelector(".encryption__button");
 let encryption = "";
 let language = document.querySelector("#alphabet");
+let caesarOffset = document.querySelector(".caesar__offset");
 
 extend( encrypt_btn, new Subject() );
+
+language.onchange = () => {
+	switch(language.value){
+		case "ru": 
+			caesarOffset.max = 33;
+			caesarOffset.value = 1;
+			break;
+		case "eng": 
+			caesarOffset.max = 26;
+			caesarOffset.value = 1;
+			break;
+		default: break;
+	}
+};
 
 let atbash = document.querySelector(".atbash__check");
 let caesar = document.querySelector(".caesar__check");
@@ -82,11 +138,27 @@ extend( atbash, new Observer() );
 extend( caesar, new Observer() );
 extend( vigener, new Observer() );
 
+atbash.index = -1;
+caesar.index = -1;
+vigener.index = -1;
+
 function subscribe(){
 	if (this.checked){
 		encrypt_btn.addObserver( this );
 	}else{
 		encrypt_btn.removeObserver( this );
+	}
+}
+
+function addConveyerItem(){
+	if (this.checked){
+		conveyer.add(this);
+		this.index = conveyer.indexOf(this, 0);
+		this.labels[0].textContent += " [" + (+this.index + 1) + "]";
+	}else{
+		conveyer.removeAt(this.index);
+		this.index = -1;
+		this.labels[0].textContent = this.labels[0].textContent.slice(0, this.labels[0].textContent.length - 4);
 	}
 }
 
@@ -113,6 +185,10 @@ function changeMode( radio ){
 		vigener.onchange = subscribe;
 	}else{
 		unChecked();
+
+		atbash.onchange = addConveyerItem;
+		caesar.onchange = addConveyerItem;
+		vigener.onchange = addConveyerItem;
 	}
 }
 
@@ -195,7 +271,6 @@ function ciferCaesar( txt, action, lang ){
 	let alphabet_eng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	let alphabet_eng1 = "abcdefghijklmnopqrstuvwxyz";
 
-	let offset = document.querySelector(".caesar__offset");
 	let string = "";
 
 	for ( let char of txt.value.trim() ){
@@ -205,13 +280,13 @@ function ciferCaesar( txt, action, lang ){
 					string += char;
 					continue;
 				}
-				string += ciferCaesarString( alphabet_ru, char, offset, action );
+				string += ciferCaesarString( alphabet_ru, char, caesarOffset, action );
 			}else{
 				if ( alphabet_ru1.indexOf(char) == -1){
 					string += char;
 					continue;
 				}
-				string += ciferCaesarString( alphabet_ru1, char, offset, action );
+				string += ciferCaesarString( alphabet_ru1, char, caesarOffset, action );
 			}
 		}else if ( lang == "eng" ){
 			if ( char == char.toUpperCase() ){
@@ -219,13 +294,13 @@ function ciferCaesar( txt, action, lang ){
 					string += char;
 					continue;
 				}
-				string += ciferCaesarString( alphabet_eng, char, offset, action );
+				string += ciferCaesarString( alphabet_eng, char, caesarOffset, action );
 			}else{
 				if ( alphabet_eng1.indexOf(char) == -1){
 					string += char;
 					continue;
 				}
-				string += ciferCaesarString( alphabet_eng1, char, offset, action );
+				string += ciferCaesarString( alphabet_eng1, char, caesarOffset, action );
 			}
 		}
 	}
@@ -233,19 +308,19 @@ function ciferCaesar( txt, action, lang ){
 	return string;
 }
 
-function ciferCaesarString( alphabet, char, offset, action ){
+function ciferCaesarString( alphabet, char, caesarOffset, action ){
 	let string = "";
 
 	if ( action == "encrypt" ){
 		string += alphabet[
-		(alphabet.indexOf(char) + +offset.value) >= alphabet.length ? 
-		alphabet.indexOf(char) + +offset.value - alphabet.length : 
-		alphabet.indexOf(char) + +offset.value];
+		(alphabet.indexOf(char) + +caesarOffset.value) >= alphabet.length ? 
+		alphabet.indexOf(char) + +caesarOffset.value - alphabet.length : 
+		alphabet.indexOf(char) + +caesarOffset.value];
 	}else if ( action == "decrypt" ){
 		string += alphabet[
-		(alphabet.indexOf(char) - +offset.value) < 0 ? 
-		alphabet.indexOf(char) - +offset.value + alphabet.length : 
-		alphabet.indexOf(char) - +offset.value];
+		(alphabet.indexOf(char) - +caesarOffset.value) < 0 ? 
+		alphabet.indexOf(char) - +caesarOffset.value + alphabet.length : 
+		alphabet.indexOf(char) - +caesarOffset.value];
 	}
 
 	return string;
