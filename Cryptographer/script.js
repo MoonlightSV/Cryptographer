@@ -142,11 +142,15 @@ atbash.index = -1;
 caesar.index = -1;
 vigener.index = -1;
 
+atbash.text = atbash.labels[0].textContent;
+caesar.text = caesar.labels[0].textContent;
+vigener.text = vigener.labels[0].textContent;
+
 function subscribe(){
 	if (this.checked){
-		encrypt_btn.addObserver( this );
+		encrypt_btn.addObserver(this);
 	}else{
-		encrypt_btn.removeObserver( this );
+		encrypt_btn.removeObserver(this);
 	}
 }
 
@@ -154,11 +158,16 @@ function addConveyerItem(){
 	if (this.checked){
 		conveyer.add(this);
 		this.index = conveyer.indexOf(this, 0);
-		this.labels[0].textContent += " [" + (+this.index + 1) + "]";
 	}else{
 		conveyer.removeAt(this.index);
 		this.index = -1;
-		this.labels[0].textContent = this.labels[0].textContent.slice(0, this.labels[0].textContent.length - 4);
+		this.labels[0].textContent = this.text;
+		for (let i = 0; i < conveyer.conveyerList.length; i++){
+			conveyer.conveyerList[i].index = conveyer.indexOf(conveyer.conveyerList[i], 0);
+		}
+	}
+	for (let i = 0; i < conveyer.conveyerList.length; i++){
+		conveyer.conveyerList[i].labels[0].textContent = conveyer.conveyerList[i].text + " [" + (+conveyer.conveyerList[i].index + 1) + "]";
 	}
 }
 
@@ -170,6 +179,16 @@ function unChecked(){
 	caesar.checked = false;
 	vigener.checked = false;
 	encrypt_btn.observers.removeAll();
+}
+
+function test(){
+	let str = input_txt.value;
+
+			for (let i = 0; i < conveyer.conveyerList.length; i++){	
+				str = conveyer.conveyerList[i].ciferFunc( str, encryption, language.value );
+			}
+
+			encrypt_txt.value += str;
 }
 
 function changeMode( radio ){
@@ -185,6 +204,16 @@ function changeMode( radio ){
 		vigener.onchange = subscribe;
 	}else{
 		unChecked();
+
+		encrypt_btn.onclick = test;/*() => {
+			let str = input_txt.value;
+
+			for (let i = 0; i < conveyer.conveyerList.length; i++){	
+				str = conveyer.conveyerList[i].ciferFunc( str, encryption.value, language.value );
+			}
+
+			encrypt_txt.value += str;
+		};*/
 
 		atbash.onchange = addConveyerItem;
 		caesar.onchange = addConveyerItem;
@@ -206,17 +235,17 @@ vigener.ciferFunc = ciferVigener;
 
 atbash.update = () => {
 	if (input_txt.textLength)
-		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt, encryption.value, language.value ) + "\n";
+		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt.value, encryption, language.value ) + "\n";
 };
 
 caesar.update = () => {
 	if (input_txt.textLength)
-		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt, encryption.value, language.value ) + "\n";
+		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt.value, encryption, language.value ) + "\n";
 };
 
 vigener.update = () => {
 	if (input_txt.textLength)
-		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt, encryption.value, language.value ) + "\n";
+		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt.value, encryption, language.value ) + "\n";
 };
 
 function ciferAtbash( txt, action, lang ){
@@ -230,7 +259,7 @@ function ciferAtbash( txt, action, lang ){
 	let tebahpla_gne1 = "zyxwvutsrqponmlkjihgfedcba";
 	let string = "";
 
-	for ( let char of txt.value.trim() ){
+	for ( let char of txt.trim() ){
 		if ( lang == "ru" ) {
 			if ( char == char.toUpperCase() ){
 				if ( alphabet_ru.indexOf(char) == -1){
@@ -273,7 +302,7 @@ function ciferCaesar( txt, action, lang ){
 
 	let string = "";
 
-	for ( let char of txt.value.trim() ){
+	for ( let char of txt.trim() ){
 		if ( lang == "ru" ) {
 			if ( char == char.toUpperCase() ){
 				if ( alphabet_ru.indexOf(char) == -1){
@@ -331,7 +360,7 @@ function ciferVigener( txt, action, lang ){
 	let alphabet_ru1 = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 	let alphabet_eng = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	let alphabet_eng1 = "abcdefghijklmnopqrstuvwxyz";
-	let txt_wsp = txt.value.split(" ").join("");
+	let txt_wsp = txt.split(" ").join("");
 	let keyword = document.querySelector(".vigener__keyword");
 	let key_txt = keyword.value.toUpperCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);
 	let key_txt1 = keyword.value.toLowerCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);
@@ -340,7 +369,7 @@ function ciferVigener( txt, action, lang ){
 	let index;
 
 	if ( action === "encrypt" ){
-		for ( let char of txt.value.trim() ){
+		for ( let char of txt.trim() ){
 			if ( lang == "ru" ){
 				if ( char == char.toUpperCase() ){
 					if ( alphabet_ru.indexOf(char) == -1){
@@ -380,7 +409,7 @@ function ciferVigener( txt, action, lang ){
 			}
 		}
 	}else if ( action === "decrypt" ){
-		for ( let char of txt.value.trim() ){
+		for ( let char of txt.trim() ){
 			if ( lang == "ru" ){
 				if ( char == char.toUpperCase() ){
 					if ( alphabet_ru.indexOf(char) == -1){
