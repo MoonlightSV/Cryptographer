@@ -35,6 +35,10 @@ ObserverList.prototype.removeAt = function( index ){
   this.observerList.splice( index, 1 );
 };
 
+ObserverList.prototype.removeAll = function(){
+	this.observerList.length = 0;
+};
+
 function Subject(){
   this.observers = new ObserverList();
 }
@@ -47,10 +51,10 @@ Subject.prototype.removeObserver = function( observer ){
   this.observers.removeAt( this.observers.indexOf( observer, 0 ) );
 };
  
-Subject.prototype.notify = function( context ){
+Subject.prototype.notify = function(){
   let observerCount = this.observers.count();
   for(let i=0; i < observerCount; i++){
-    this.observers.get(i).update( context );
+    this.observers.get(i).update();
   }
 };
 
@@ -65,7 +69,7 @@ function extend( obj, extension ){
 }
 
 let encrypt_btn = document.querySelector(".encryption__button");
-let encryption = "encrypt";
+let encryption = "";
 let language = document.querySelector("#alphabet");
 
 extend( encrypt_btn, new Subject() );
@@ -93,14 +97,7 @@ function unChecked(){
 	atbash.checked = false;
 	caesar.checked = false;
 	vigener.checked = false;
-}
-
-function changeEncryption( radio ){
-	if ( radio.value == "encrypt" ){
-		encryption = "encrypt";
-	}else{
-		encryption = "decrypt";
-	}
+	encrypt_btn.observers.removeAll();
 }
 
 function changeMode( radio ){
@@ -108,7 +105,7 @@ function changeMode( radio ){
 		unChecked();
 
 		encrypt_btn.onclick = () => {
-			encrypt_btn.notify(encryption);
+			encrypt_btn.notify();
 		};
 
 		atbash.onchange = subscribe;
@@ -119,6 +116,11 @@ function changeMode( radio ){
 	}
 }
 
+function changeEncryption( radio ){
+	encryption = radio.value;
+	encrypt_btn.disabled = false;
+}
+
 let input_txt = document.querySelector(".input__text");
 let encrypt_txt = document.querySelector(".encryption__text");
 
@@ -126,28 +128,19 @@ atbash.ciferFunc = ciferAtbash;
 caesar.ciferFunc = ciferCaesar;
 vigener.ciferFunc = ciferVigener;
 
-atbash.update = ( action ) => {
-	if ( action === "encrypt" ){
-		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt, action, language.value ) + "\n";
-	}else if ( action === "decrypt" ){
-		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt, action, language.value ) + "\n";
-	}
+atbash.update = () => {
+	if (input_txt.textLength)
+		encrypt_txt.value += "Атбаш: " + input_txt.value.trim() + " => " + atbash.ciferFunc( input_txt, encryption.value, language.value ) + "\n";
 };
 
-caesar.update = ( action ) => {
-	if ( action === "encrypt" ){
-		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt, action, language.value ) + "\n";
-	}else if ( action === "decrypt" ){
-		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt, action, language.value ) + "\n";
-	}
+caesar.update = () => {
+	if (input_txt.textLength)
+		encrypt_txt.value += "Цезарь: " + input_txt.value.trim() + " => " + caesar.ciferFunc( input_txt, encryption.value, language.value ) + "\n";
 };
 
-vigener.update = ( action ) => {
-	if ( action === "encrypt" ){
-		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt, action, language.value ) + "\n";
-	}else if ( action === "decrypt" ){
-		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt, action, language.value ) + "\n";
-	}
+vigener.update = () => {
+	if (input_txt.textLength)
+		encrypt_txt.value += "Виженер: " + input_txt.value.trim() + " => " + vigener.ciferFunc( input_txt, encryption.value, language.value ) + "\n";
 };
 
 function ciferAtbash( txt, action, lang ){
