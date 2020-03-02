@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Cryptographer</title>
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="input">
+			<textarea placeholder="Введите текст, который хотите зашифровать/расшифровать" class="input__text"></textarea>
+		</div>
+		<div class="selector">
+			<div class="selector__alphabet">
+				<label for="alphabet">Алфавит</label>
+				<select name="alphabet" id="alphabet">
+					<option value="ru">Русский</option>
+					<option value="eng">Английский</option>
+				</select>
+			</div>
+			<div class="selector__switch">
+				<input type="radio" name="mode" value="observer" id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
+				<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
+			</div>
+			<div class="selector__checkboxes">
+				<div class="atbash">
+					<input type="checkbox" disabled class="atbash__check" id="atbash"><label for="atbash">Шифр Атбаш</label>
+				</div>
+				<div class="caesar">
+					<input type="checkbox" disabled class="caesar__check" id="caesar"><label for="caesar">Шифр Цезаря</label>
+					<br>
+					<input type="number" class="caesar__offset" min="1" max="33" value="1">
+				</div>
+				<div class="vigener">
+					<input type="checkbox" disabled class="vigener__check" id="vigener"><label for="vigener">Шифр Виженера</label>
+					<br>
+					<input type="text" class="vigener__keyword">
+				</div>
+			</div>
+		</div>
+		<div class="output">
+			<div class="encryption">
+				<input type="radio" name="encryption" value="encrypt" id="encrypt" onclick="changeEncryption(this)"><label for="encrypt">Зашифровать</label>
+				<input type="radio" name="encryption" value="decrypt" id="decrypt" onclick="changeEncryption(this)"><label for="decrypt">Расшифровать</label>
+				<br>
+				<button class="encryption__button" disabled>Обработать</button>
+				<br>
+				<textarea placeholder="Здесь появится обработанный текст" readonly class="encryption__text"></textarea>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="script.js"></script>
+</html>
