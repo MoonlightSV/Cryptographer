@@ -28,20 +28,20 @@
 				</div>
 				<div class="caesar">
 					<input type="checkbox" disabled class="caesar__check" id="caesar"><label for="caesar">Шифр Цезаря</label>
-					<br>
 					<input type="number" class="caesar__offset" min="1" max="33" value="1">
 				</div>
 				<div class="vigener">
 					<input type="checkbox" disabled class="vigener__check" id="vigener"><label for="vigener">Шифр Виженера</label>
-					<br>
 					<input type="text" class="vigener__keyword">
 				</div>
 			</div>
 		</div>
 		<div class="output">
 			<div class="encryption">
-				<input type="radio" name="encryption" value="encrypt" id="encrypt" onclick="changeEncryption(this)"><label for="encrypt">Зашифровать</label>
-				<input type="radio" name="encryption" value="decrypt" id="decrypt" onclick="changeEncryption(this)"><label for="decrypt">Расшифровать</label>
+				<div class="encryption__radio">
+					<input type="radio" name="encryption" value="encrypt" id="encrypt" onclick="changeEncryption(this)"><label for="encrypt">Зашифровать</label>
+					<input type="radio" name="encryption" value="decrypt" id="decrypt" onclick="changeEncryption(this)"><label for="decrypt">Расшифровать</label>
+				</div>
 				<br>
 				<button class="encryption__button" disabled>Обработать</button>
 				<br>

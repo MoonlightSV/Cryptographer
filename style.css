@@ -1,18 +1,154 @@
-.container {}
-.input {}
-.input__text {}
-.selector {}
-.selector__switch {}
-.selector__checkboxes {}
-.atbash {}
-.atbash__check {}
-.caesar {}
-.caesar__check {}
-.caesar__offset {}
-.vigener {}
-.vigener__check {}
-.vigener__keyword {}
-.output {}
-.encryption {}
-.encryption__button {}
-.encryption__text {}
+/*Обнуление*/
+*{
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+*,*:before,*:after{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
+/*--------------------*/
+
+* {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 20px;
+}
+.container {
+	padding: 5px;
+	max-width: 90%;
+	min-width: 600px;
+	width: 600px;
+	height: 100%;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.input {
+	margin: 0 0 15px 0;
+}
+.input__text {
+	resize: none;
+	width: 100%;
+	height: 200px;
+	border: 5px dotted #999;
+	padding: 5px;
+}
+.selector {
+	width: 100%;
+	display: grid;
+	grid-template-areas: "alphabet switch"  
+                       "checkboxes checkboxes";
+  justify-items: center;
+  align-items: center;
+}
+.selector__alphabet {
+	grid-area: alphabet;
+}
+#alphabet {
+	border: 1px solid #a9a9a9;
+	padding: 2px;
+}
+.selector__switch {
+	grid-area: switch;
+}
+#observer {
+	margin: 0 2px;
+}
+#conveyer {
+	margin: 0 2px;
+}
+.selector__checkboxes {
+	grid-area: checkboxes;
+	margin: 15px 0 0 0;
+}
+.atbash {
+	margin: 5px;
+}
+.atbash__check {
+
+}
+.caesar {
+	margin: 5px;
+}
+.caesar__check {
+
+}
+.caesar__offset {
+	border: 1px solid #a9a9a9;
+	width: 40px;
+	padding: 2px;
+}
+.vigener {
+	margin: 5px;
+}
+.vigener__check {
+
+}
+.vigener__keyword {
+	border: 1px solid #a9a9a9;
+	padding: 2px;
+}
+.output {
+	margin: 15px 0 0 0;
+}
+.encryption {
+	width: 100%;
+	display: grid;
+	grid-template-areas: "radio button"  
+                       "text text";
+  justify-items: center;
+  align-items: center;
+}
+.encryption__radio {
+	grid-area: radio;
+}
+#encrypt {
+	margin: 0 2px;
+}
+#decrypt {
+	margin: 0 2px;
+}
+.encryption__button {
+	grid-area: button;
+	border: 1px solid #a9a9a9;
+	width: 150px;
+	height: 50px;
+}
+.encryption__button:active {
+	box-shadow: inset 1px 1px 5px 0 #ccc;
+}
+.encryption__text {
+	margin: 15px 0 0 0;
+	grid-area: text;
+	resize: none;
+	width: 100%;
+	height: 200px;
+	border: 5px dotted #999;
+	padding: 5px;
+}
