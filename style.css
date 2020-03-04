@@ -41,26 +41,18 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	padding: 5px;
 	max-width: 40%;
 	width: 100%;
-	min-width: 600px;
 	height: 100%;
-	position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-}
-@media only screen and (max-width: 1000px) {
-  .container {  
-  	max-width: 100%;
-  }
+	min-width: 600px;
+	margin: 0 auto;
 }
 .input {
 	margin: 0 0 15px 0;
+	width: 100%;
 }
 .input__text {
 	resize: none;
 	width: 100%;
-	height: 200px;
+	height: 350px;
 	border: 5px dotted #999;
 	padding: 5px;
 }
@@ -121,6 +113,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 }
 .output {
 	margin: 15px 0 0 0;
+	width: 100%;
 }
 .encryption {
 	width: 100%;
@@ -153,7 +146,35 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	grid-area: text;
 	resize: none;
 	width: 100%;
-	height: 400px;
+	height: 350px;
 	border: 5px dotted #999;
 	padding: 5px;
 }
+/*@media only screen and (max-width: 1000px) {
+  .container {  
+  	max-width: 100%;
+  }
+}
+@media only screen and (min-height: 1000px) {
+  .container { 
+  	display: grid;
+  	grid-template-areas: "input"  
+                       	 "selector"
+                       	 "output";
+  	justify-items: center;
+  	align-items: center;
+  	align-content: space-around;
+  }
+  .input {
+  	grid-area: input;
+  }
+  .input__text {
+  	height: 400px;
+  }
+	.selector {
+  	grid-area: selector;
+  }
+  .output {
+  	grid-area: output;
+  }
+}*/
