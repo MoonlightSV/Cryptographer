@@ -362,8 +362,9 @@ function ciferVigener( context ){
 	let alphabet_eng1 = "abcdefghijklmnopqrstuvwxyz";
 	let txt_wsp = context.txt.split(" ").join("");
 	let keyword = document.querySelector(".vigener__keyword");
-	let key_txt = keyword.value.toUpperCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);
-	let key_txt1 = keyword.value.toLowerCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);
+	let keyword_wsp = keyword.value.split(" ").join("");
+	let key_txt = keyword_wsp.toUpperCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);
+	let key_txt1 = keyword_wsp.toLowerCase().repeat(txt_wsp.length).substr(0, txt_wsp.length);
 	let string = "";
 	let i = 0;
 	let index;
