@@ -39,40 +39,45 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 }
 .container {
 	padding: 5px;
-	max-width: 40%;
-	width: 100%;
 	height: 100%;
-	min-width: 600px;
 	margin: 0 auto;
+	display: flex;
+
 }
-.input {
-	margin: 0 0 15px 0;
-	width: 100%;
+.flex__item-main {
+	flex: 1 1 33.333%;
+}
+.flex__item {
+	flex: 1 1 auto;
 }
 .input__text {
 	resize: none;
 	width: 100%;
-	height: 350px;
+	height: 100%	;
 	border: 5px dotted #999;
 	padding: 5px;
 }
 .selector {
-	width: 100%;
-	display: grid;
-	grid-template-areas: "alphabet switch"  
-                       "checkboxes checkboxes";
-  justify-items: center;
-  align-items: center;
+	padding: 5px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.selector__top {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
 }
 .selector__alphabet {
-	grid-area: alphabet;
+
 }
 #alphabet {
 	border: 1px solid #a9a9a9;
 	padding: 2px;
 }
 .selector__switch {
-	grid-area: switch;
+
 }
 #observer {
 	margin: 0 2px;
@@ -81,50 +86,40 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	margin: 0 2px;
 }
 .selector__checkboxes {
-	grid-area: checkboxes;
-	margin: 15px 0 0 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-.atbash {
-	margin: 5px;
-}
-.atbash__check {
-
-}
-.caesar {
-	margin: 5px;
-}
-.caesar__check {
-
+.check {
+	display: inline-block;
+	margin: 5px 0 20px 0;
+	text-align: center;
 }
 .caesar__offset {
 	border: 1px solid #a9a9a9;
 	width: 40px;
 	padding: 2px;
-}
-.vigener {
-	margin: 5px;
-}
-.vigener__check {
-
+	margin: 0 5px 0 0;
 }
 .vigener__keyword {
 	border: 1px solid #a9a9a9;
 	padding: 2px;
+	margin: 5px 0 0 0;
 }
 .output {
-	margin: 15px 0 0 0;
-	width: 100%;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
 }
 .encryption {
-	width: 100%;
-	display: grid;
-	grid-template-areas: "radio button"  
-                       "text text";
-  justify-items: center;
-  align-items: center;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 10px 0 20px 0;
 }
 .encryption__radio {
-	grid-area: radio;
+	margin: 0 0 10px 0;
 }
 #encrypt {
 	margin: 0 2px;
@@ -133,7 +128,6 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	margin: 0 2px;
 }
 .encryption__button {
-	grid-area: button;
 	border: 1px solid #a9a9a9;
 	width: 150px;
 	height: 50px;
@@ -142,39 +136,13 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	box-shadow: inset 1px 1px 5px 0 #ccc;
 }
 .encryption__text {
-	margin: 15px 0 0 0;
-	grid-area: text;
 	resize: none;
 	width: 100%;
-	height: 350px;
 	border: 5px dotted #999;
 	padding: 5px;
 }
-/*@media only screen and (max-width: 1000px) {
-  .container {  
-  	max-width: 100%;
-  }
+@media (max-width: 1080px) {
+	.container {
+		flex-direction: column;
+	}
 }
-@media only screen and (min-height: 1000px) {
-  .container { 
-  	display: grid;
-  	grid-template-areas: "input"  
-                       	 "selector"
-                       	 "output";
-  	justify-items: center;
-  	align-items: center;
-  	align-content: space-around;
-  }
-  .input {
-  	grid-area: input;
-  }
-  .input__text {
-  	height: 400px;
-  }
-	.selector {
-  	grid-area: selector;
-  }
-  .output {
-  	grid-area: output;
-  }
-}*/

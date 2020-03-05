@@ -1,38 +1,38 @@
 'use strict'
 
 function ObserverList(){
-  this.observerList = [];
+	this.observerList = [];
 }
- 
+
 ObserverList.prototype.add = function( obj ){
-  return this.observerList.push( obj );
+	return this.observerList.push( obj );
 };
- 
+
 ObserverList.prototype.count = function(){
-  return this.observerList.length;
+	return this.observerList.length;
 };
- 
+
 ObserverList.prototype.get = function( index ){
-  if( index > -1 && index < this.observerList.length ){
-    return this.observerList[ index ];
-  }
+	if( index > -1 && index < this.observerList.length ){
+		return this.observerList[ index ];
+	}
 };
- 
+
 ObserverList.prototype.indexOf = function( obj, startIndex ){
-  var i = startIndex;
- 
-  while( i < this.observerList.length ){
-    if( this.observerList[i] === obj ){
-      return i;
-    }
-    i++;
-  }
- 
-  return -1;
+	var i = startIndex;
+
+	while( i < this.observerList.length ){
+		if( this.observerList[i] === obj ){
+			return i;
+		}
+		i++;
+	}
+
+	return -1;
 };
- 
+
 ObserverList.prototype.removeAt = function( index ){
-  this.observerList.splice( index, 1 );
+	this.observerList.splice( index, 1 );
 };
 
 ObserverList.prototype.removeAll = function(){
@@ -40,22 +40,22 @@ ObserverList.prototype.removeAll = function(){
 };
 
 function Subject(){
-  this.observers = new ObserverList();
+	this.observers = new ObserverList();
 }
- 
+
 Subject.prototype.addObserver = function( observer ){
-  this.observers.add( observer );
+	this.observers.add( observer );
 };
- 
+
 Subject.prototype.removeObserver = function( observer ){
-  this.observers.removeAt( this.observers.indexOf( observer, 0 ) );
+	this.observers.removeAt( this.observers.indexOf( observer, 0 ) );
 };
- 
+
 Subject.prototype.notify = function( context, output ){
-  let observerCount = this.observers.count();
-  for(let i=0; i < observerCount; i++){
-    this.observers.get(i).update( this.observers.get(i), context, output );
-  }
+	let observerCount = this.observers.count();
+	for(let i=0; i < observerCount; i++){
+		this.observers.get(i).update( this.observers.get(i), context, output );
+	}
 };
 
 function Observer(){
@@ -65,9 +65,9 @@ function Observer(){
 }
 
 function extend( obj, extension ){
-  for ( let key in extension ){
-    obj[key] = extension[key];
-  }
+	for ( let key in extension ){
+		obj[key] = extension[key];
+	}
 }
 
 function Conveyer(){
@@ -75,34 +75,34 @@ function Conveyer(){
 }
 
 Conveyer.prototype.add = function( obj ){
-  return this.conveyerList.push( obj );
+	return this.conveyerList.push( obj );
 };
- 
+
 Conveyer.prototype.count = function(){
-  return this.conveyerList.length;
+	return this.conveyerList.length;
 };
- 
+
 Conveyer.prototype.get = function( index ){
-  if( index > -1 && index < this.conveyerList.length ){
-    return this.conveyerList[ index ];
-  }
+	if( index > -1 && index < this.conveyerList.length ){
+		return this.conveyerList[ index ];
+	}
 };
- 
+
 Conveyer.prototype.indexOf = function( obj, startIndex ){
-  var i = startIndex;
- 
-  while( i < this.conveyerList.length ){
-    if( this.conveyerList[i] === obj ){
-      return i;
-    }
-    i++;
-  }
- 
-  return -1;
+	var i = startIndex;
+
+	while( i < this.conveyerList.length ){
+		if( this.conveyerList[i] === obj ){
+			return i;
+		}
+		i++;
+	}
+
+	return -1;
 };
- 
+
 Conveyer.prototype.removeAt = function( index ){
-  this.conveyerList.splice( index, 1 );
+	this.conveyerList.splice( index, 1 );
 };
 
 Conveyer.prototype.removeAll = function(){

@@ -2,51 +2,61 @@
 <html lang="ru">
 <head>
 	<title>Cryptographer</title>
-	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 </head>
 <body>
 	<div class="container">
-		<div class="input">
+		<div class="input flex__item-main">
 			<textarea placeholder="Введите текст, который хотите зашифровать/расшифровать" class="input__text"></textarea>
 		</div>
-		<div class="selector">
-			<div class="selector__alphabet">
-				<label for="alphabet">Алфавит</label>
-				<select name="alphabet" id="alphabet">
-					<option value="ru">Русский</option>
-					<option value="eng">Английский</option>
-				</select>
+		<div class="selector flex__item-main">
+			<div class="selector__top flex__item">
+				<div class="selector__alphabet">
+					<label for="alphabet">Алфавит</label>
+					<select name="alphabet" id="alphabet">
+						<option value="ru">Русский</option>
+						<option value="eng">Английский</option>
+					</select>
+				</div>
+				<div class="selector__switch">
+					<div class="radio">
+						<input type="radio" name="mode" value="observer" id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
+					</div>
+					<div class="radio">
+						<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
+					</div>
+				</div>
 			</div>
-			<div class="selector__switch">
-				<input type="radio" name="mode" value="observer" id="observer" onclick="changeMode(this)"><label for="observer">Параллельно</label>
-				<input type="radio" name="mode" value="conveyer" id="conveyer" onclick="changeMode(this)"><label for="conveyer">Последовательно</label>
-			</div>
-			<div class="selector__checkboxes">
-				<div class="atbash">
+			<div class="selector__checkboxes flex__item">
+				<div class="check">
 					<input type="checkbox" disabled class="atbash__check" id="atbash"><label for="atbash">Шифр Атбаш</label>
 				</div>
-				<div class="caesar">
-					<input type="checkbox" disabled class="caesar__check" id="caesar"><label for="caesar">Шифр Цезаря</label>
+				<div class="check">
 					<input type="number" class="caesar__offset" min="1" max="33" value="1">
+					<input type="checkbox" disabled class="caesar__check" id="caesar"><label for="caesar">Шифр Цезаря</label>
 				</div>
-				<div class="vigener">
+				<div class="check">
 					<input type="checkbox" disabled class="vigener__check" id="vigener"><label for="vigener">Шифр Виженера</label>
+					<br>
 					<input type="text" class="vigener__keyword">
 				</div>
 			</div>
 		</div>
-		<div class="output">
+		<div class="output flex__item-main">
 			<div class="encryption">
 				<div class="encryption__radio">
-					<input type="radio" name="encryption" value="encrypt" id="encrypt" onclick="changeEncryption(this)"><label for="encrypt">Зашифровать</label>
-					<input type="radio" name="encryption" value="decrypt" id="decrypt" onclick="changeEncryption(this)"><label for="decrypt">Расшифровать</label>
+					<div class="radio">
+						<input type="radio" name="encryption" value="encrypt" id="encrypt" onclick="changeEncryption(this)"><label for="encrypt">Зашифровать</label>
+					</div>
+					<div class="radio">
+						<input type="radio" name="encryption" value="decrypt" id="decrypt" onclick="changeEncryption(this)"><label for="decrypt">Расшифровать</label>
+					</div>
 				</div>
-				<br>
 				<button class="encryption__button" disabled>Обработать</button>
-				<br>
-				<textarea placeholder="Здесь появится обработанный текст" readonly class="encryption__text"></textarea>
 			</div>
+			<textarea placeholder="Здесь появится обработанный текст" readonly class="encryption__text flex__item"></textarea>
 		</div>
 	</div>
 </body>
